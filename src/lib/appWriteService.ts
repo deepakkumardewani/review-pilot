@@ -77,7 +77,7 @@ export const createUserDocument = async (
 /**
  * Helper function to get or create a user document
  */
-const getUserDocument = async (userId: string) => {
+export const getUserDocument = async (userId: string) => {
   try {
     logger.info(
       `[${new Date().toISOString()}] getUserDocument called for user: ${userId}`
