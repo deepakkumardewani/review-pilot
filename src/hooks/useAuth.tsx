@@ -1,20 +1,12 @@
 import { useState, useEffect } from "react";
 import { account } from "@/lib/appwrite";
 import { Models, OAuthProvider } from "appwrite";
-import { createUserDocument } from "@/lib/appWriteService";
 import { useRouter } from "next/navigation";
-import logger from "@/lib/logger";
 
 interface UseAppwriteReturn {
   user: Models.User<Models.Preferences> | null;
   loading: boolean;
   error: string | null;
-  login: (email: string, password: string) => Promise<void>;
-  register: (
-    email: string,
-    password: string,
-    name: string
-  ) => Promise<Models.User<Models.Preferences>>;
   logout: () => Promise<void>;
   oauthLogin: (provider: string) => Promise<void>;
 }
@@ -39,8 +31,9 @@ export const useAppwrite = (): UseAppwriteReturn => {
         const currentUser = await account.get();
         setUser(currentUser);
       } catch (err) {
-        // User is not logged in, don't show error
         setUser(null);
+        throw err;
+        // User is not logged in, don't show error
       } finally {
         setLoading(false);
       }
@@ -48,61 +41,6 @@ export const useAppwrite = (): UseAppwriteReturn => {
 
     checkSession();
   }, []);
-
-  // Login with email and password
-  const login = async (email: string, password: string) => {
-    try {
-      setLoading(true);
-      setError(null);
-
-      // Create email session
-      await account.createSession(email, password);
-
-      // Get the logged-in user
-      const currentUser = await account.get();
-      setUser(currentUser);
-
-      // Redirect to dashboard page after successful login
-      router.push("/dashboard");
-    } catch (err: any) {
-      setError(err.message || "Failed to log in");
-      throw err;
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Register a new user
-  const register = async (
-    email: string,
-    password: string,
-    name: string
-  ): Promise<Models.User<Models.Preferences>> => {
-    try {
-      setLoading(true);
-      setError(null);
-
-      // Create a new account
-      const newUser = await account.create("unique()", email, password, name);
-      logger.info(`Created new account: ${newUser.$id}`);
-
-      // Create user document in the database
-      await createUserDocument(newUser.$id, name, email);
-      logger.info(`Created user document for: ${newUser.$id}`);
-
-      // Login after registration
-      await login(email, password);
-
-      // No need to redirect - the login function will handle redirection
-
-      return newUser;
-    } catch (err: any) {
-      setError(err.message || "Failed to register");
-      throw err;
-    } finally {
-      setLoading(false);
-    }
-  };
 
   // Login with OAuth provider (Google, GitHub)
   const oauthLogin = async (provider: string) => {
@@ -125,8 +63,8 @@ export const useAppwrite = (): UseAppwriteReturn => {
       );
 
       // Note: Code after this point will NOT execute due to the redirect
-    } catch (err: any) {
-      setError(err.message || `Failed to log in with ${provider}`);
+    } catch (err) {
+      setError((err as string) || `Failed to log in with ${provider}`);
       throw err;
     } finally {
       setLoading(false);
@@ -142,8 +80,8 @@ export const useAppwrite = (): UseAppwriteReturn => {
       await account.deleteSession("current");
 
       router.push("/");
-    } catch (err: any) {
-      setError(err.message || "Failed to log out");
+    } catch (err) {
+      setError((err as string) || "Failed to log out");
       throw err;
     } finally {
       setLoading(false);
@@ -161,8 +99,6 @@ export const useAppwrite = (): UseAppwriteReturn => {
     user,
     loading,
     error,
-    login,
-    register,
     logout,
     oauthLogin,
   };
