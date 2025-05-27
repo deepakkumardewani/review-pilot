@@ -1,13 +1,10 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-import { AuthSlice, createAuthSlice } from "./slices/authSlice";
-import {
-  RepositorySlice,
-  createRepositorySlice,
-} from "./slices/repositorySlice";
-import { FileSlice, createFileSlice } from "./slices/fileSlice";
-import { ReviewSlice, createReviewSlice } from "./slices/reviewSlice";
+import { createAuthSlice } from "./slices/authSlice";
+import { createRepositorySlice } from "./slices/repositorySlice";
+import { createFileSlice } from "./slices/fileSlice";
+import { createReviewSlice } from "./slices/reviewSlice";
 import { StoreState } from "./types";
 
 // Create the store with persist middleware to maintain state across page refreshes

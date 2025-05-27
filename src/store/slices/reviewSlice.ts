@@ -92,6 +92,7 @@ export const createReviewSlice: StateCreator<
     try {
       // Logic to fetch review history from Appwrite
       // This is a placeholder for actual implementation
+      console.log("fetching review history", filePath);
       const reviews: Review[] = []; // Placeholder for fetched reviews
       set({ reviewHistory: reviews, reviewLoading: false });
     } catch (error) {

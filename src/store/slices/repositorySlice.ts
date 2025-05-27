@@ -31,7 +31,7 @@ export const createRepositorySlice: StateCreator<
   [],
   [],
   RepositorySlice
-> = (set, get) => ({
+> = (set) => ({
   selectedRepository: null,
   selectedBranch: null,
   username: "deepakkumardewani",
