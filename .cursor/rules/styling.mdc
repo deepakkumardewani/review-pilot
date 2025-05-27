@@ -1,0 +1,27 @@
+---
+description: styling
+globs: *.tsx
+alwaysApply: false
+---
+### UI and Styling
+
+Component Libraries
+- Use Shadcn UI for consistent, accessible component design.
+- Apply composition patterns to create modular, reusable components.
+- Use lucide react for all the icons
+- whenever you want to use an icon, first import the icon in the src/components/ui/icons.ts file, import the icons file and then use the icon.
+
+Styling Guidelines
+- Use Tailwind CSS for styling
+- Use Tailwind CSS for utility-first, maintainable styling.
+- Design with mobile-first, responsive principles for flexibility across devices.
+- Implement dark mode using CSS variables or Tailwind’s dark mode features.
+- Ensure color contrast ratios meet accessibility standards for readability.
+- Maintain consistent spacing values to establish visual harmony.
+- Define CSS variables for theme colors and spacing to support easy theming and maintainability.
+- Use a mobile-first approach
+
+### Shadcn UI Rules
+- Use existing Shadcn components (`@/components/ui/*`) for UI elements.
+- If a component doesn’t exist, suggest installing it with `npx shadcn-ui@latest add <component>`.
+- Combine Shadcn components with Tailwind for custom styling.

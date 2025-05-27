@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "sequential-thinking": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
+    },
+    "appwrite": {
+      "command": "uvx",
+      "args": ["mcp-server-appwrite"],
+      "env": {
+        "APPWRITE_PROJECT_ID": "67ec2e4a000218d4bf94",
+        "APPWRITE_API_KEY": "standard_9f2e4d51d1ef256eaf1d3c817182449d6a8207f3e6570552c6ab48cc34a586c591fffe767c8e7826e5444426e642f8676903591a6ce74bab3d0179fb7367ece3b48b53b6fcc1996d79083d50455286a757418b5879c9f758caf7388e0104a9b34faa38d1591664a628602ea5128f0d197bbf405b10d6d08384cd4bf1514af879"
+      }
+    }
+  }
+}
