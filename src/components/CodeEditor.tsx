@@ -33,7 +33,7 @@ export default function CodeEditor() {
         setReviewError(new Error(`API Error: ${response.statusText}`));
       }
     },
-    onFinish: (completion) => {
+    onFinish: () => {
       setReviewLoading(false);
     },
     onError: (err) => {
