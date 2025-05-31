@@ -2,7 +2,6 @@
 import { useEffect } from "react";
 import CodeEditor from "@/components/CodeEditor";
 import FileTree from "@/components/FileTree";
-import RepositorySelector from "@/components/RepositorySelector";
 import ReviewPanel from "@/components/ReviewPanel";
 import Header from "@/components/shared/Header";
 import { useStore } from "@/store";

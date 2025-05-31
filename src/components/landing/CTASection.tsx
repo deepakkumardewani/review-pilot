@@ -1,8 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Github } from "@/components/ui/icons";
 import { useAuth } from "@/contexts/AuthContext";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function CTASection() {

@@ -1,5 +1,5 @@
 // Adapted from shadcn/ui: https://ui.shadcn.com/docs/components/toast
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 
 export type ToastVariant = "default" | "destructive" | "success";
 
@@ -9,16 +9,6 @@ export interface Toast {
   description?: string;
   variant?: ToastVariant;
   duration?: number;
-}
-
-interface ToastState {
-  toasts: Toast[];
-}
-
-interface ToastContextValue extends ToastState {
-  addToast: (toast: Omit<Toast, "id">) => void;
-  removeToast: (id: string) => void;
-  updateToast: (id: string, toast: Partial<Toast>) => void;
 }
 
 // Custom hook to generate unique IDs
@@ -31,10 +21,9 @@ const DEFAULT_DURATION = 5000;
 
 export function useToast() {
   const [toasts, setToasts] = useState<Toast[]>([]);
+  const id = useId();
 
   const addToast = useCallback((toast: Omit<Toast, "id">) => {
-    const id = useId();
-
     setToasts((prevToasts) => [
       ...prevToasts,
       { id, ...toast, duration: toast.duration || DEFAULT_DURATION },

@@ -16,11 +16,13 @@ export default function SignUpForm() {
     try {
       setIsLoading(true);
       await oauthLogin();
-    } catch (error) {
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : "An unknown error occurred";
       toast({
         variant: "destructive",
         title: "Error",
-        description: `Failed to sign in with GitHub`,
+        description: `Failed to sign in with GitHub: ${errorMessage}`,
       });
     } finally {
       setIsLoading(false);

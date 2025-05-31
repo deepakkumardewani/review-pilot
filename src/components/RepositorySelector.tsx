@@ -16,13 +16,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { Info, Check, ChevronsUpDown } from "@/components/ui/icons";
+import { Check, ChevronsUpDown } from "@/components/ui/icons";
 import { useRepository } from "@/store/store";
 import {
   useRepositoriesData,
