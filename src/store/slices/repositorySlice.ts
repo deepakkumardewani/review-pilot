@@ -34,7 +34,7 @@ export const createRepositorySlice: StateCreator<
 > = (set) => ({
   selectedRepository: null,
   selectedBranch: null,
-  username: "deepakkumardewani",
+  username: "",
 
   setUsername: (username: string) => {
     set({ username });

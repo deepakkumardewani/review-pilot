@@ -7,10 +7,10 @@ export const getLanguageFromFilename = (filename: string): string => {
   const languageMap: Record<string, string> = {
     // JavaScript/TypeScript
     js: "javascript",
-    jsx: "javascript",
+    jsx: "jsx",
     ts: "typescript",
-    tsx: "typescript",
-    mjs: "javascript",
+    tsx: "tsx",
+    mjs: "js",
 
     // Web languages
     html: "html",
