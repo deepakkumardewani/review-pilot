@@ -62,7 +62,7 @@ export function ThemeToggle({
       variant="ghost"
       onClick={toggleTheme}
       className={cn(
-        "flex items-center gap-2 transition-colors",
+        "flex items-center transition-colors",
         isDark
           ? "text-gray-300 hover:text-white hover:bg-gray-800"
           : "text-gray-600 hover:text-gray-900 hover:bg-gray-100",
