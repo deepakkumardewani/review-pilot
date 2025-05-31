@@ -8,7 +8,7 @@ interface UseAppwriteReturn {
   loading: boolean;
   error: string | null;
   logout: () => Promise<void>;
-  oauthLogin: (provider: string) => Promise<void>;
+  oauthLogin: () => Promise<void>;
 }
 
 /**
@@ -43,28 +43,24 @@ export const useAppwrite = (): UseAppwriteReturn => {
   }, []);
 
   // Login with OAuth provider (Google, GitHub)
-  const oauthLogin = async (provider: string) => {
+  const oauthLogin = async () => {
     try {
       setLoading(true);
       setError(null);
 
-      const providerEnum =
-        provider === "google" ? OAuthProvider.Google : OAuthProvider.Github;
-
-      // Redirect to OAuth callback page instead of directly to create page
       const successUrl = `${window.location.origin}/auth/callback`;
       const failureUrl = `${window.location.origin}`;
 
       // Create OAuth2 session for the provider
       account.createOAuth2Session(
-        providerEnum,
+        OAuthProvider.Github,
         successUrl, // Callback page that will handle document creation
         failureUrl // Failure URL
       );
 
       // Note: Code after this point will NOT execute due to the redirect
     } catch (err) {
-      setError((err as string) || `Failed to log in with ${provider}`);
+      setError((err as string) || `Failed to log in with GitHub`);
       throw err;
     } finally {
       setLoading(false);
