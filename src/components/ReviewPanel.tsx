@@ -14,7 +14,7 @@ export default function ReviewPanel() {
         <h2 className="text-xl font-semibold mb-4">Review</h2>
         <div className="bg-muted/50 rounded-lg p-6 text-center">
           <p className="text-muted-foreground text-lg">
-            No review available. Select a file to review.
+            Select a file to review.
           </p>
         </div>
       </div>

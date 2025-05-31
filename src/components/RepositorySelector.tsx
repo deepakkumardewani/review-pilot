@@ -53,7 +53,7 @@ export default function RepositorySelector() {
     if (branches.length > 0 && !selectedBranch && selectedRepository) {
       selectBranch(branches[0]);
     }
-  }, [branches, selectedBranch, selectedRepository, selectBranch]);
+  }, [branches, selectedBranch]);
 
   const handleRepositoryChange = (repositoryName: string) => {
     const repository = repositories.find(
@@ -74,13 +74,11 @@ export default function RepositorySelector() {
   };
 
   return (
-    <div className="space-y-3">
+    <div className="flex gap-3">
       {/* Repository Dropdown */}
-      <div className="space-y-1">
-        <div className="flex items-center justify-between">
-          <label className="text-sm font-medium text-foreground">
-            Repository
-          </label>
+      <div className="flex-1 ">
+        {/* <div className="flex items-center justify-between">
+          
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -93,7 +91,7 @@ export default function RepositorySelector() {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-        </div>
+        </div> */}
 
         <Popover open={repoOpen} onOpenChange={setRepoOpen}>
           <PopoverTrigger asChild>
@@ -140,8 +138,8 @@ export default function RepositorySelector() {
       </div>
 
       {/* Branch Dropdown */}
-      <div className="space-y-1">
-        <label className="text-sm font-medium text-foreground">Branch</label>
+      <div className="flex-1 ">
+        {/* <label className="text-sm font-medium text-foreground">Branch</label> */}
         <Popover open={branchOpen} onOpenChange={setBranchOpen}>
           <PopoverTrigger asChild>
             <Button

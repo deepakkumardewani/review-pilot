@@ -319,12 +319,12 @@ export default function FileTree() {
   }
 
   return (
-    <div className="text-card-foreground">
+    <div className="h-full flex flex-col text-card-foreground">
       <h2 className="text-lg font-semibold mb-2">Files</h2>
       <Tree<TreeNode>
         data={treeData}
         width="100%"
-        height={400}
+        height={600}
         indent={16}
         rowHeight={32}
         openByDefault={false}
