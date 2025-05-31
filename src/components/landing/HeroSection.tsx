@@ -1,8 +1,12 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Github } from "@/components/ui/icons";
+import { useAuth } from "@/contexts/AuthContext";
+import { useRouter } from "next/navigation";
 
 export default function HeroSection() {
+  const { user } = useAuth();
+  const router = useRouter();
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center px-4 py-20 overflow-hidden">
       {/* Background grid pattern */}
@@ -17,7 +21,7 @@ export default function HeroSection() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,background_70%)] " />
 
       {/* Content */}
-      <div className="hero-content max-w-4xl mx-auto text-center space-y-8 relative z-10">
+      <div className="hero-content max-w-4xl mx-auto text-center space-y-8 relative z-30">
         <div className="space-y-4">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight">
             <span className="bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
@@ -37,10 +41,17 @@ export default function HeroSection() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Button
             size="lg"
-            className="group text-base px-8 shadow-lg hover:shadow-xl transition-shadow"
+            onClick={() => {
+              if (user) {
+                router.push("/dashboard");
+              } else {
+                router.push("/signup");
+              }
+            }}
+            className="group text-base px-8 shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
           >
-            <Github className="mr-2 h-5 w-5" />
-            Start with GitHub
+            {!user && <Github className="mr-2 h-5 w-5" />}
+            {user ? "Dashboard" : "Get Started"}
           </Button>
 
           {/* <Button variant="outline" size="lg" className="text-base px-8">

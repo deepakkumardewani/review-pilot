@@ -1,8 +1,14 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Github } from "@/components/ui/icons";
+import { useAuth } from "@/contexts/AuthContext";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function CTASection() {
+  const { user } = useAuth();
+  const router = useRouter();
+
   return (
     <section className="cta-section py-24 px-4 relative">
       {/* Background pattern */}
@@ -26,9 +32,16 @@ export default function CTASection() {
             <Button
               size="lg"
               className="text-base px-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              onClick={() => {
+                if (user) {
+                  router.push("/dashboard");
+                } else {
+                  router.push("/signup");
+                }
+              }}
             >
-              <Github className="mr-2 h-5 w-5" />
-              Get Started Free
+              {/* <Github className="mr-2 h-5 w-5" /> */}
+              {user ? "Dashboard" : "Get Started"}
             </Button>
           </div>
         </div>
