@@ -27,7 +27,9 @@ const fileContentFetcher = async (url: string): Promise<string> => {
 
 export function useRepositoriesData(username: string) {
   const { data, error, isLoading } = useSWR<Repository[]>(
-    username ? `https://api.github.com/users/${username}/repos` : null,
+    username
+      ? `https://api.github.com/users/${username}/repos?per_page=50`
+      : null,
     fetcher,
     {
       revalidateOnFocus: false,
