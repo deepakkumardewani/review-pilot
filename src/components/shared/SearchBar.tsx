@@ -5,6 +5,7 @@ import { Search } from "lucide-react";
 import { useFile, useRepository } from "@/store/store";
 import { useFileTreeData } from "@/hooks/useRepositoryData";
 import { getFileIcon } from "@/lib/fileIcons";
+import { GitHubFileTreeItem } from "@/lib/apiTypes";
 
 interface FileItem {
   id: string;
@@ -34,7 +35,7 @@ export default function SearchBar() {
 
     const files: FileItem[] = [];
 
-    fileTreeData.tree.forEach((item: any) => {
+    fileTreeData.tree.forEach((item: GitHubFileTreeItem) => {
       if (item.type === "blob") {
         const pathParts = item.path.split("/");
         const fileName = pathParts[pathParts.length - 1];

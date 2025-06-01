@@ -1,28 +1,13 @@
 import { StateCreator } from "zustand";
 import { StoreState } from "../types";
-
-export interface Repository {
-  id: number;
-  name: string;
-  full_name: string;
-  description: string;
-  default_branch: string;
-  // Other repository properties from GitHub API
-}
-
-export interface Branch {
-  name: string;
-  commit: {
-    sha: string;
-  };
-}
+import { GitHubRepository, GitHubBranch } from "@/lib/apiTypes";
 
 export interface RepositorySlice {
-  selectedRepository: Repository | null;
-  selectedBranch: Branch | null;
+  selectedRepository: GitHubRepository | null;
+  selectedBranch: GitHubBranch | null;
   username: string;
-  selectRepository: (repository: Repository) => void;
-  selectBranch: (branch: Branch) => void;
+  selectRepository: (repository: GitHubRepository) => void;
+  selectBranch: (branch: GitHubBranch) => void;
   setUsername: (username: string) => void;
 }
 
@@ -40,11 +25,11 @@ export const createRepositorySlice: StateCreator<
     set({ username });
   },
 
-  selectRepository: (repository: Repository) => {
+  selectRepository: (repository: GitHubRepository) => {
     set({ selectedRepository: repository, selectedBranch: null });
   },
 
-  selectBranch: (branch: Branch) => {
+  selectBranch: (branch: GitHubBranch) => {
     set({ selectedBranch: branch });
   },
 });
