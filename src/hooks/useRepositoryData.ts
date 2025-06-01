@@ -1,13 +1,43 @@
 import useSWR from "swr";
-import { Repository, Branch } from "@/store/slices/repositorySlice";
 import { decodeBase64Content } from "@/lib/fileUtils";
+import {
+  repositorySchema,
+  branchSchema,
+  fileTreeDataSchema,
+  fileContentSchema,
+  GitHubRepository,
+  GitHubBranch,
+  GitHubFileTreeData,
+} from "@/lib/apiTypes";
+import { z } from "zod";
 
-const fetcher = async (url: string) => {
+const repositoriesFetcher = async (
+  url: string
+): Promise<GitHubRepository[]> => {
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error(`Failed to fetch: ${response.status}`);
   }
-  return response.json();
+  const data = await response.json();
+  return z.array(repositorySchema).parse(data);
+};
+
+const branchesFetcher = async (url: string): Promise<GitHubBranch[]> => {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch: ${response.status}`);
+  }
+  const data = await response.json();
+  return z.array(branchSchema).parse(data);
+};
+
+const fileTreeFetcher = async (url: string): Promise<GitHubFileTreeData> => {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch file tree: ${response.status}`);
+  }
+  const data = await response.json();
+  return fileTreeDataSchema.parse(data);
 };
 
 const fileContentFetcher = async (url: string): Promise<string> => {
@@ -17,20 +47,21 @@ const fileContentFetcher = async (url: string): Promise<string> => {
   }
 
   const data = await response.json();
+  const validatedData = fileContentSchema.parse(data);
 
-  if (data.encoding === "base64" && data.content) {
-    return decodeBase64Content(data.content);
+  if (validatedData.encoding === "base64" && validatedData.content) {
+    return decodeBase64Content(validatedData.content);
   }
 
-  return data.content || "No content available";
+  return validatedData.content || "No content available";
 };
 
 export function useRepositoriesData(username: string) {
-  const { data, error, isLoading } = useSWR<Repository[]>(
+  const { data, error, isLoading } = useSWR<GitHubRepository[]>(
     username
       ? `https://api.github.com/users/${username}/repos?per_page=50`
       : null,
-    fetcher,
+    repositoriesFetcher,
     {
       revalidateOnFocus: false,
       dedupingInterval: 300000, // 5 minutes
@@ -45,11 +76,11 @@ export function useRepositoriesData(username: string) {
 }
 
 export function useBranchesData(username: string, repoName: string) {
-  const { data, error, isLoading } = useSWR<Branch[]>(
+  const { data, error, isLoading } = useSWR<GitHubBranch[]>(
     username && repoName
       ? `https://api.github.com/repos/${username}/${repoName}/branches`
       : null,
-    fetcher,
+    branchesFetcher,
     {
       revalidateOnFocus: false,
       dedupingInterval: 300000, // 5 minutes
@@ -68,11 +99,11 @@ export function useFileTreeData(
   repoName: string,
   branch: string
 ) {
-  const { data, error, isLoading } = useSWR(
+  const { data, error, isLoading } = useSWR<GitHubFileTreeData>(
     username && repoName && branch
       ? `https://api.github.com/repos/${username}/${repoName}/git/trees/${branch}?recursive=1`
       : null,
-    fetcher,
+    fileTreeFetcher,
     {
       revalidateOnFocus: false,
       dedupingInterval: 300000, // 5 minutes
