@@ -7,6 +7,7 @@ import { HoverBorderGradient } from "../ui/hover-border-gradient";
 import { useAuth } from "@/contexts/AuthContext";
 import { usePathname } from "next/navigation";
 import RepositorySelector from "../RepositorySelector";
+import SearchBar from "./SearchBar";
 
 export default function Header() {
   const { user } = useAuth();
@@ -14,11 +15,17 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="mx-auto flex justify-between items-center px-4 py-4">
-        <div className="flex items-center space-x-6">
-          <h1 className="text-xl font-bold text-foreground">Review Pilot</h1>
-        </div>
+        {pathname === "/" && (
+          <div className="flex items-center space-x-6">
+            <h1 className="text-xl font-bold text-foreground">Review Pilot</h1>
+          </div>
+        )}
         <div className="w-64">
           {pathname === "/dashboard" && <RepositorySelector />}
+        </div>
+
+        <div className="flex-1 flex justify-center max-w-md mx-auto">
+          {pathname === "/dashboard" && <SearchBar />}
         </div>
 
         <div className="flex items-center gap-4">
